@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MatchFin Empresas — Flujo de Experiencia</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.0/mermaid.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  header {
+    background: #0a0a0a;
+    border-bottom: 2px solid #1be28c;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    height: 52px;
+  }
+  .h-left { display: flex; align-items: center; gap: 16px; }
+  .h-brand {
+    font-size: 15px; font-weight: 700;
+    color: #1be28c; letter-spacing: 1px;
+  }
+  .h-title {
+    font-size: 13px; color: #5a6e73;
+    border-left: 1px solid #2a2a2a;
+    padding-left: 16px;
+  }
+  .h-right { display: flex; align-items: center; gap: 8px; }
+
+  .btn {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    color: #ededed;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .btn:hover { background: #1be28c; color: #000; border-color: #1be28c; }
+  .zoom-val {
+    font-size: 12px; color: #5a6e73;
+    min-width: 38px; text-align: center;
+  }
+
+  .canvas {
+    position: fixed;
+    top: 52px; left: 0; right: 0; bottom: 0;
+    overflow: hidden;
+    cursor: grab;
+  }
+  .canvas:active { cursor: grabbing; }
+
+  .diagram-wrap {
+    position: absolute;
+    top: 0; left: 0;
+    transform-origin: top left;
+    padding: 40px 60px 80px;
+  }
+
+  .mermaid svg { max-width: none !important; display: block; }
+
+  /* Legend */
+  .legend {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 10px;
+    padding: 12px 16px;
+    z-index: 200;
+  }
+  .legend-title {
+    font-size: 9px; font-weight: 700;
+    color: #5a6e73; text-transform: uppercase;
+    letter-spacing: 1.5px; margin-bottom: 8px;
+  }
+  .legend-item {
+    display: flex; align-items: center;
+    gap: 8px; font-size: 11px;
+    color: #ededed; margin-bottom: 5px;
+  }
+  .legend-item:last-child { margin-bottom: 0; }
+  .ld {
+    width: 12px; height: 12px;
+    border-radius: 3px; flex-shrink: 0;
+  }
+
+  /* Hint */
+  .hint {
+    position: fixed;
+    bottom: 20px; left: 20px;
+    font-size: 11px; color: #2a2a2a;
+    z-index: 200;
+    line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-left">
+    <div class="h-brand">MatchFin</div>
+    <div class="h-title">Empresas On-Demand · Flujo de Experiencia</div>
+  </div>
+  <div class="h-right">
+    <button class="btn" onclick="zoomBy(-0.15)">−</button>
+    <span class="zoom-val" id="zval">100%</span>
+    <button class="btn" onclick="zoomBy(+0.15)">+</button>
+    <button class="btn" onclick="resetView()">Reset</button>
+    <button class="btn" onclick="fitView()">⊡ Fit</button>
+  </div>
+</header>
+
+<div class="canvas" id="canvas">
+  <div class="diagram-wrap" id="dw">
+    <div class="mermaid">
+---
+title: MatchFin Empresas On-Demand — Flujo de Experiencia
+---
+flowchart TB
+    A(["**LEAD**
+    Campaña digital
+    o gestión comercial"]) --> B["Landing / Login con Google"]
+    B --> C["Acepta Términos y Condiciones"]
+    C --> D["**TENANT PRIVADO ACTIVO**
+    Acceso permanente · Sin costo de alta
+    Historial no vence"]
+    D --> E["**DASHBOARD**
+    Saldo créditos ANÁLISIS
+    Saldo créditos MONITOREO
+    CUITs analizados / monitoreados"]
+    E --> F{"¿Tiene
+    créditos?"}
+    F -- NO --> G["**COMPRA DE PACK**
+    Self-service · Pago online
+    Precio en USD · Cobro ARS
+    al tipo vendedor BNA del día"]
+    G --> H{"¿Qué
+    pack?"}
+    H -- Análisis --> H1["Starter — 10 análisis
+    Growth — 50 análisis ★
+    Scale — 150 análisis
+    Custom — a negociar"]
+    H -- Monitoreo --> H2["Watch 5 — 5 CUITs
+    Watch 20 — 20 CUITs
+    Watch 50 — 50 CUITs"]
+    H1 --> E
+    H2 --> E
+    F -- SÍ --> I["**INGRESA CUIT**
+    a analizar"]
+    I --> J{"¿Tipo de
+    análisis?"}
+    J -- "Express · 0.5 créditos" --> K["**ANÁLISIS EXPRESS**
+    NOSIS + LUFE + MAV + Alertas - Sin balance requerido"]
+    J -- "Completo · 1 crédito" --> L["**ANÁLISIS COMPLETO**
+    NOSIS + LUFE + MAV + BeanCounter: Sube Balance (100+ ratios) + Score QUANT + Informe IA narrativo"]
+    K --> M["**RESULTADO**
+    Registro congelado con fecha
+    Disponible en tenant · Descargable PDF/ URL Link - Se debita crédito del pack"]
+    L --> M
+    M --> N{"¿Activar
+    MONITOREO
+    sobre este CUIT?"}
+    N -- NO --> O["Continuar sin monitoreo
+    CUIT queda en historial del tenant"]
+    N -- SÍ --> P{"¿Tiene créditos
+    de monitoreo?"}
+    P -- NO --> G
+    P -- SÍ --> Q["**MONITOREO ACTIVADO**
+    Cada 15 días: NOSIS + LUFE + MAV - (No aplica QUANT ni balance) - Backup situación mensual"]
+    Q --> R{"¿Cambio
+    detectado?"}
+    R -- SÍ --> S["**ALERTA enviada**
+    Notificación al usuario"]
+    R -- NO --> Q
+    S --> T{"¿Qué hacer
+    con el CUIT?"}
+    T -- Actualizar análisis --> I
+    T -- Pausar monitoreo --> U["MONITOREO PAUSADO
+    No consume créditos
+    Se puede reactivar"]
+    T -- Mantener monitoreo --> Q
+    O --> V{"¿Siguiente
+    acción?"}
+    U --> V
+    V -- Nuevo CUIT --> I
+    V -- Actualizar análisis --> I
+    V -- Recargar créditos --> G
+    V -- Nuevo monitoreo --> P
+
+     A:::entrada
+     B:::accion
+     C:::accion
+     D:::tenant
+     E:::resultado
+     F:::decision
+     G:::pack
+     H:::decision
+     H1:::accion
+     H2:::accion
+     I:::accion
+     J:::decision
+     K:::express
+     L:::completo
+     M:::resultado
+     N:::decision
+     O:::accion
+     P:::decision
+     Q:::monitoreo
+     R:::decision
+     S:::alerta
+     T:::decision
+     U:::resultado
+     V:::decision
+    classDef entrada    fill:#0a0a0a,stroke:#1be28c,stroke-width:2px,color:#1be28c
+    classDef tenant     fill:#0d9960,stroke:#0d9960,stroke-width:1px,color:#ffffff
+    classDef accion     fill:#ededed,stroke:#5a6e73,stroke-width:1px,color:#000000
+    classDef decision   fill:#1be28c,stroke:#0d9960,stroke-width:2px,color:#000000
+    classDef express    fill:#5a6e73,stroke:#5a6e73,stroke-width:1px,color:#ffffff
+    classDef completo   fill:#0d9960,stroke:#1be28c,stroke-width:2px,color:#ffffff
+    classDef resultado  fill:#0a0a0a,stroke:#5a6e73,stroke-width:1px,color:#ededed
+    classDef monitoreo  fill:#0a0a0a,stroke:#1be28c,stroke-width:2px,color:#1be28c
+    classDef alerta     fill:#401e24,stroke:#401e24,stroke-width:1px,color:#ededed
+    classDef pack       fill:#1be28c,stroke:#0d9960,stroke-width:2px,color:#000000
+    </div>
+  </div>
+</div>
+
+<div class="legend">
+  <div class="legend-title">Referencias</div>
+  <div class="legend-item"><div class="ld" style="background:#1be28c;border:1px solid #0d9960"></div>Decisión</div>
+  <div class="legend-item"><div class="ld" style="background:#0d9960"></div>Tenant / Completo</div>
+  <div class="legend-item"><div class="ld" style="background:#5a6e73"></div>Express</div>
+  <div class="legend-item"><div class="ld" style="background:#ededed;border:1px solid #aaa"></div>Acción</div>
+  <div class="legend-item"><div class="ld" style="background:#1a1a1a;border:1px solid #5a6e73"></div>Resultado</div>
+  <div class="legend-item"><div class="ld" style="background:#401e24"></div>Alerta</div>
+</div>
+
+<div class="hint">
+  Drag para mover · Scroll para zoom · Ctrl+Scroll también
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      darkMode: true,
+      background: '#0a0a0a',
+      primaryColor: '#1be28c',
+      primaryTextColor: '#000000',
+      primaryBorderColor: '#0d9960',
+      lineColor: '#5a6e73',
+      secondaryColor: '#1a1a1a',
+      tertiaryColor: '#111111',
+      fontSize: '13px'
+    },
+    flowchart: { curve: 'basis', padding: 18, nodeSpacing: 40, rankSpacing: 55 }
+  });
+
+  const canvas = document.getElementById('canvas');
+  const dw = document.getElementById('dw');
+  const zval = document.getElementById('zval');
+
+  let scale = 1;
+  let tx = 0, ty = 0;
+
+  function applyTransform() {
+    dw.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+    dw.style.transformOrigin = 'top left';
+    zval.textContent = Math.round(scale * 100) + '%';
+  }
+
+  function zoomBy(delta) {
+    scale = Math.min(3, Math.max(0.15, scale + delta));
+    applyTransform();
+  }
+
+  function resetView() {
+    scale = 1; tx = 0; ty = 0;
+    applyTransform();
+  }
+
+  function fitView() {
+    const svg = dw.querySelector('svg');
+    if (!svg) return;
+    const cW = canvas.clientWidth;
+    const cH = canvas.clientHeight;
+    const sW = svg.getBoundingClientRect().width / scale;
+    const sH = svg.getBoundingClientRect().height / scale;
+    scale = Math.min((cW - 80) / sW, (cH - 80) / sH, 1);
+    tx = (cW - sW * scale) / 2;
+    ty = 20;
+    applyTransform();
+  }
+
+  // Drag
+  let dragging = false, dragStartX, dragStartY, startTx, startTy;
+  canvas.addEventListener('mousedown', e => {
+    dragging = true;
+    dragStartX = e.clientX; dragStartY = e.clientY;
+    startTx = tx; startTy = ty;
+  });
+  window.addEventListener('mouseup', () => dragging = false);
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    tx = startTx + (e.clientX - dragStartX);
+    ty = startTy + (e.clientY - dragStartY);
+    applyTransform();
+  });
+
+  // Wheel zoom centered on cursor
+  canvas.addEventListener('wheel', e => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const delta = e.deltaY < 0 ? 0.1 : -0.1;
+    const newScale = Math.min(3, Math.max(0.15, scale + delta));
+    tx = mx - (mx - tx) * (newScale / scale);
+    ty = my - (my - ty) * (newScale / scale);
+    scale = newScale;
+    applyTransform();
+  }, { passive: false });
+
+  // Touch pinch/pan
+  let lastTouchDist = null;
+  canvas.addEventListener('touchstart', e => {
+    if (e.touches.length === 1) {
+      dragging = true;
+      dragStartX = e.touches[0].clientX;
+      dragStartY = e.touches[0].clientY;
+      startTx = tx; startTy = ty;
+    }
+  });
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    if (e.touches.length === 1 && dragging) {
+      tx = startTx + (e.touches[0].clientX - dragStartX);
+      ty = startTy + (e.touches[0].clientY - dragStartY);
+      applyTransform();
+    } else if (e.touches.length === 2) {
+      const d = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      if (lastTouchDist) {
+        scale = Math.min(3, Math.max(0.15, scale * (d / lastTouchDist)));
+        applyTransform();
+      }
+      lastTouchDist = d;
+    }
+  }, { passive: false });
+  canvas.addEventListener('touchend', () => { dragging = false; lastTouchDist = null; });
+
+  // Auto fit after render
+  window.addEventListener('load', () => setTimeout(fitView, 600));
+</script>
+</body>
+</html>
