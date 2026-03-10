@@ -133,20 +133,20 @@
 title: MatchFin Empresas On-Demand — Flujo de Experiencia
 ---
 flowchart TB
-    A(["**LEAD**
+    A(["LEAD
     Campaña digital
     o gestión comercial"]) --> B["Landing / Login con Google"]
     B --> C["Acepta Términos y Condiciones"]
-    C --> D["**TENANT PRIVADO ACTIVO**
+    C --> D["TENANT PRIVADO ACTIVO
     Acceso permanente · Sin costo de alta
     Historial no vence"]
-    D --> E["**DASHBOARD**
+    D --> E["DASHBOARD
     Saldo créditos ANÁLISIS
     Saldo créditos MONITOREO
     CUITs analizados / monitoreados"]
     E --> F{"¿Tiene
     créditos?"}
-    F -- NO --> G["**COMPRA DE PACK**
+    F -- NO --> G["COMPRA DE PACK
     Self-service · Pago online
     Precio en USD · Cobro ARS
     al tipo vendedor BNA del día"]
@@ -161,15 +161,15 @@ flowchart TB
     Watch 50 — 50 CUITs"]
     H1 --> E
     H2 --> E
-    F -- SÍ --> I["**INGRESA CUIT**
+    F -- SÍ --> I["INGRESA CUIT
     a analizar"]
     I --> J{"¿Tipo de
     análisis?"}
-    J -- "Express · 0.5 créditos" --> K["**ANÁLISIS EXPRESS**
+    J -- "Express · 0.5 créditos" --> K["ANÁLISIS EXPRESS
     NOSIS + LUFE + MAV + Alertas - Sin balance requerido"]
-    J -- "Completo · 1 crédito" --> L["**ANÁLISIS COMPLETO**
+    J -- "Completo · 1 crédito" --> L["ANÁLISIS COMPLETO
     NOSIS + LUFE + MAV + BeanCounter: Sube Balance (100+ ratios) + Score QUANT + Informe IA narrativo"]
-    K --> M["**RESULTADO**
+    K --> M["RESULTADO
     Registro congelado con fecha
     Disponible en tenant · Descargable PDF/ URL Link - Se debita crédito del pack"]
     L --> M
@@ -181,11 +181,11 @@ flowchart TB
     N -- SÍ --> P{"¿Tiene créditos
     de monitoreo?"}
     P -- NO --> G
-    P -- SÍ --> Q["**MONITOREO ACTIVADO**
+    P -- SÍ --> Q["MONITOREO ACTIVADO
     Cada 15 días: NOSIS + LUFE + MAV - (No aplica QUANT ni balance) - Backup situación mensual"]
     Q --> R{"¿Cambio
     detectado?"}
-    R -- SÍ --> S["**ALERTA enviada**
+    R -- SÍ --> S["ALERTA enviada
     Notificación al usuario"]
     R -- NO --> Q
     S --> T{"¿Qué hacer
@@ -373,4 +373,5 @@ flowchart TB
 </script>
 </body>
 </html>
+
 
